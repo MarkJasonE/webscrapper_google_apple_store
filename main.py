@@ -1,7 +1,8 @@
 import os
+import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
-import time
+from selenium.webdriver.common.keys import Keys
 
 url = "https://play.google.com/store/apps/details?id=com.covalent.kippo&hl=en_US&gl=US&showAllReviews=true"
 
@@ -9,6 +10,7 @@ chromebrowser = r"C:\Users\Jason\Downloads\chromedriver\chromedriver.exe"
 os.environ["webdriver.chrome.driver"] = chromebrowser
 browser = webdriver.Chrome(chromebrowser)
 browser.get(url)
+
 
 #Because the site loads slowly, we need to wait 5 seconds until we can get the full page source
 time.sleep(5)
@@ -31,6 +33,7 @@ while True:
   #Calculate new scroll height and compare to last scroll height
   new_height = browser.execute_script("return document.body.scrollHeight")
   if new_height == last_height:
+    print("breaked while loop")
     break
   last_height = new_height
 
@@ -38,8 +41,9 @@ while True:
 #browser.close()
 #browser.quit()
 
-"""
+# after scrolling a few times a div with the "role=button class='U26fgb O0WRkf oG5Srb C0oVfc n9lfJ M9Bg4d'". Check if that button exist, then click it and continue scrolling down
 
+"""
 reviews_boxes = soup.find_all("div", class_="d15Mdf")
 for reviews_box in reviews_boxes:
   rev_name = reviews_box.find("span", class_="X43Kjb").text
