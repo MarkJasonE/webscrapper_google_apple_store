@@ -22,7 +22,7 @@ def app_to_csv(country=None, app_name=None, data_src="apple"):
   df.to_csv(DATA_DIR_PATH + data_src + "_reviews_" + country + ".csv", index=False, encoding="utf-8")
 
 #US
-#app_to_csv(country="us", app_name="kippo-dating-app-for-gamers")
+app_to_csv(country="us", app_name="kippo-dating-app-for-gamers")
 
 #CA
-#app_to_csv(country="ca", app_name="kippo-dating-app-for-gamers")
+app_to_csv(country="ca", app_name="kippo-dating-app-for-gamers")
