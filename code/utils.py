@@ -1,4 +1,3 @@
-import emoji
 import re
 import pandas as pd
 import numpy as np
@@ -32,16 +31,11 @@ def drop_col(df, cols):
 def clean_txt(df, col):
   df[col].replace(r"\s+|\\n", " ", regex=True, inplace=True)
 
-#A-2.2 Clean string from emojis
-def remove_emoji(text):
-  new_txt = emoji.get_emoji_regexp().sub(r"", text)
-  return new_txt
-
-#A-2.3 Clean time string from upper/lower case and white spaces before converting
+#A-2.2 Clean time string from upper/lower case and white spaces before converting
 def clean_time(df, col):
   df[col] = df[col].str.replace(r"[a-zA-Z ]|\s+", " ", regex=True)
 
-
+#A-2.4 Process the text data into tokenz
 
 ###### END A-2 STRING MANIPULATION ######
 
