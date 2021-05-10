@@ -4,19 +4,19 @@ from bokeh.models import CustomJS
 # handle the currently selected article
 def selected_code():
     code = """
-            var titles = [];
-            var authors = [];
-            var journals = [];
-            var links = [];
-            cb_data.source.selected.indices.forEach(index => titles.push(source.data['titles'][index]));
-            cb_data.source.selected.indices.forEach(index => authors.push(source.data['authors'][index]));
-            cb_data.source.selected.indices.forEach(index => journals.push(source.data['journal'][index]));
-            cb_data.source.selected.indices.forEach(index => links.push(source.data['links'][index]));
-            title = "<h4>" + titles[0].toString().replace(/<br>/g, ' ') + "</h4>";
-            authors = "<p1><b>Authors:</b> " + authors[0].toString().replace(/<br>/g, ' ') + "<br>"
-            // journal = "<b>Journal</b>" + journals[0].toString() + "<br>"
-            link = "<b>Link:</b> <a href='" + "http://doi.org/" + links[0].toString() + "'>" + "http://doi.org/" + links[0].toString() + "</a></p1>"
-            current_selection.text = title + authors + link
+            var reviews = [];
+            var ratings = [];
+            var reviewPostDate = [];
+            var thumbsUps = [];
+            cb_data.source.selected.indices.forEach(index => reviews.push(source.data['reviews'][index]));
+            cb_data.source.selected.indices.forEach(index => rating.push(source.data['ratings'][index]));
+            cb_data.source.selected.indices.forEach(index => reviewPostDate.push(source.data['reviewPostDate'][index]));
+            cb_data.source.selected.indices.forEach(index => thumbsUps.push(source.data['thumbsUps'][index]));
+            review = "<h4>" + reviews[0].toString().replace(/<br>/g, ' ') + "</h4>";
+            rating = "<p1><b>Is review edited?:</b> " + ratings[0].toString().replace(/<br>/g, ' ') + "<br>"
+            reviewPostDate = "<b>Review post date</b>" + reviewPostDate[0].toString() + "<br>"
+            thumbsUp = "<b>Link:</b> <a href='" + "http://doi.org/" + thumbsUps[0].toString() + "'>" + "http://doi.org/" + thumbsUps[0].toString() + "</a></p1>"
+            current_selection.text = review + rating + thumbsUp + reviewPostDate
             current_selection.change.emit();
     """
     return code
@@ -37,17 +37,17 @@ def input_callback(plot, source, out_text, topics):
                 x_backup = data['x_backup'];
                 y_backup = data['y_backup'];
                 labels = data['desc'];
-                abstract = data['abstract'];
-                titles = data['titles'];
-                authors = data['authors'];
-                journal = data['journal'];
-                if (cluster == '20') {
+                thumbsUp = data['thumbsUp'];
+                reviews = data['review'];
+                ratings = data['rating'];
+                reviewPostDate = data['reviewPostDate'];
+                if (cluster == '10') {
                     out_text.text = 'Keywords: Slide to specific cluster to see the keywords.';
                     for (i = 0; i < x.length; i++) {
-						if(abstract[i].includes(key) || 
+						if(thumbsUp[i].includes(key) || 
 						titles[i].includes(key) || 
-						authors[i].includes(key) || 
-						journal[i].includes(key)) {
+						ratings[i].includes(key) || 
+						reviewPostDate[i].includes(key)) {
 							x[i] = x_backup[i];
 							y[i] = y_backup[i];
 						} else {
@@ -60,10 +60,10 @@ def input_callback(plot, source, out_text, topics):
                     out_text.text = 'Keywords: ' + topics[Number(cluster)];
                     for (i = 0; i < x.length; i++) {
                         if(labels[i] == cluster) {
-							if(abstract[i].includes(key) || 
+							if(thumbsUp[i].includes(key) || 
 							titles[i].includes(key) || 
-							authors[i].includes(key) || 
-							journal[i].includes(key)) {
+							ratings[i].includes(key) || 
+							reviewPostDate[i].includes(key)) {
 								x[i] = x_backup[i];
 								y[i] = y_backup[i];
 							} else {
