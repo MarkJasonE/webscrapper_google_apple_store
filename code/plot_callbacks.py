@@ -5,18 +5,33 @@ from bokeh.models import CustomJS
 def selected_code():
     code = """
             var reviews = [];
-            var ratings = [];
+            var isEdited = [];
             var reviewPostDate = [];
+            var store = [];
+            var ratings = [];
             var thumbsUps = [];
-            cb_data.source.selected.indices.forEach(index => reviews.push(source.data['reviews'][index]));
-            cb_data.source.selected.indices.forEach(index => rating.push(source.data['ratings'][index]));
-            cb_data.source.selected.indices.forEach(index => reviewPostDate.push(source.data['reviewPostDate'][index]));
-            cb_data.source.selected.indices.forEach(index => thumbsUps.push(source.data['thumbsUps'][index]));
-            review = "<h4>" + reviews[0].toString().replace(/<br>/g, ' ') + "</h4>";
-            rating = "<p1><b>Is review edited?:</b> " + ratings[0].toString().replace(/<br>/g, ' ') + "<br>"
-            reviewPostDate = "<b>Review post date</b>" + reviewPostDate[0].toString() + "<br>"
-            thumbsUp = "<b>Link:</b> <a href='" + "http://doi.org/" + thumbsUps[0].toString() + "'>" + "http://doi.org/" + thumbsUps[0].toString() + "</a></p1>"
-            current_selection.text = review + rating + thumbsUp + reviewPostDate
+            var reviewAppVersion = [];
+            var devResponseDate = [];
+            var devResponse = [];
+
+            cb_data.source.selected.indices.forEach(index => reviews.push(source.data["reviews"][index]));
+            cb_data.source.selected.indices.forEach(index => isEdited.push(source.data["isEdited"][index]));
+            cb_data.source.selected.indices.forEach(index => reviewPostDate.push(source.data["reviewPostDate"][index]));
+            cb_data.source.selected.indices.forEach(index => store.push(source.data["store"][index]));
+            cb_data.source.selected.indices.forEach(index => ratings.push(source.data["ratings"][index]));
+            cb_data.source.selected.indices.forEach(index => thumbsUps.push(source.data["thumbsUp"][index]));
+            cb_data.source.selected.indices.forEach(index => reviewAppVersion.push(source.data["reviewAppVersion"][index]));
+            cb_data.source.selected.indices.forEach(index => devResponseDate.push(source.data["devResponseDate"][index]));
+            cb_data.source.selected.indices.forEach(index => devResponse.push(source.data["devResponse"][index]));
+
+            review = "<h4><b>Review: </b>" + reviews[0].toString() + "</h4>";
+            reviewPostDate = "<p><b>Review post date: </b>" + reviewPostDate[0].toString() + "</p>"
+            rating = "<p><b>Rating: </b> " + ratings[0].toString() + "</p>"
+            thumbsUp =  "<p><b>Number of upvote: </b>" + thumbsUps[0].toString() + "</p>"
+            devResponse = "<p><b>Dev response: </b>" + devResponse[0].toString() + "</p>"
+            devResponseDate = "<p><b>Dev response date: </b>" + devResponseDate[0].toString() + "</p>"
+
+            current_selection.text = review + reviewPostDate + rating + thumbsUp + devResponse + devResponseDate
             current_selection.change.emit();
     """
     return code
@@ -37,17 +52,29 @@ def input_callback(plot, source, out_text, topics):
                 x_backup = data['x_backup'];
                 y_backup = data['y_backup'];
                 labels = data['desc'];
-                thumbsUp = data['thumbsUp'];
-                reviews = data['review'];
-                ratings = data['rating'];
-                reviewPostDate = data['reviewPostDate'];
+                reviews = data["reviews"];
+                isEdited = data["isEdited"];
+                reviewPostDate = data["reviewPostDate"];
+                store = data["store"];
+                ratings = data["ratings"];
+                thumbsUp = data["thumbsUp"];
+                reviewAppVersion = data["reviewAppVersion"];
+                devResponseDate = data["devResponseDate"];
+                devResponse = data["devResponse"];
                 if (cluster == '10') {
                     out_text.text = 'Keywords: Slide to specific cluster to see the keywords.';
                     for (i = 0; i < x.length; i++) {
-						if(thumbsUp[i].includes(key) || 
-						titles[i].includes(key) || 
-						ratings[i].includes(key) || 
-						reviewPostDate[i].includes(key)) {
+						if(
+                            reviews[i].includes(key) || 
+						    isEdited[i].includes(key) || 
+						    ratings[i].includes(key) || 
+						    reviewPostDate[i].includes(key) ||
+                            store[i].includes(key) ||
+                            ratings[i].includes(key) ||
+                            thumbsUp[i].includes(key) ||
+                            reviewAppVersion[i].includes(key) || 
+                            devResponseDate[i].inlcudes(key) ||
+                            devResponse[i].includes(key)) {
 							x[i] = x_backup[i];
 							y[i] = y_backup[i];
 						} else {
@@ -60,10 +87,17 @@ def input_callback(plot, source, out_text, topics):
                     out_text.text = 'Keywords: ' + topics[Number(cluster)];
                     for (i = 0; i < x.length; i++) {
                         if(labels[i] == cluster) {
-							if(thumbsUp[i].includes(key) || 
-							titles[i].includes(key) || 
-							ratings[i].includes(key) || 
-							reviewPostDate[i].includes(key)) {
+							if(
+                                reviews[i].includes(key) || 
+						        isEdited[i].includes(key) || 
+						        ratings[i].includes(key) || 
+						        reviewPostDate[i].includes(key) ||
+                                store[i].includes(key) ||
+                                ratings[i].includes(key) ||
+                                thumbsUp[i].includes(key) ||
+                                reviewAppVersion[i].includes(key) || 
+                                devResponseDate[i].inlcudes(key) ||
+                                devResponse[i].includes(key)) {
 								x[i] = x_backup[i];
 								y[i] = y_backup[i];
 							} else {
