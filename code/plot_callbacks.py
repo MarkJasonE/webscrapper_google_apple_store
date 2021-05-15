@@ -70,7 +70,6 @@ def input_callback(plot, source, out_text, topics):
 						    ratings[i].includes(key) || 
 						    reviewPostDate[i].includes(key) ||
                             store[i].includes(key) ||
-                            ratings[i].includes(key) ||
                             thumbsUp[i].includes(key) ||
                             reviewAppVersion[i].includes(key) || 
                             devResponseDate[i].inlcudes(key) ||
@@ -93,7 +92,6 @@ def input_callback(plot, source, out_text, topics):
 						        ratings[i].includes(key) || 
 						        reviewPostDate[i].includes(key) ||
                                 store[i].includes(key) ||
-                                ratings[i].includes(key) ||
                                 thumbsUp[i].includes(key) ||
                                 reviewAppVersion[i].includes(key) || 
                                 devResponseDate[i].inlcudes(key) ||
