@@ -28,10 +28,11 @@ def selected_code():
             reviewPostDate = "<p><b>Review post date: </b>" + reviewPostDate[0].toString() + "</p>"
             rating = "<p><b>Rating: </b> " + ratings[0].toString() + "</p>"
             thumbsUp =  "<p><b>Number of upvote: </b>" + thumbsUps[0].toString() + "</p>"
+            store =  "<p><b>Store: </b>" + store[0].toString() + "</p>"
             devResponse = "<p><b>Dev response: </b>" + devResponse[0].toString() + "</p>"
             devResponseDate = "<p><b>Dev response date: </b>" + devResponseDate[0].toString() + "</p>"
 
-            current_selection.text = review + reviewPostDate + rating + thumbsUp + devResponse + devResponseDate
+            current_selection.text = review + reviewPostDate + rating + thumbsUp + store +devResponse + devResponseDate
             current_selection.change.emit();
     """
     return code
@@ -53,27 +54,14 @@ def input_callback(plot, source, out_text, topics):
                 y_backup = data['y_backup'];
                 labels = data['desc'];
                 reviews = data["reviews"];
-                isEdited = data["isEdited"];
-                reviewPostDate = data["reviewPostDate"];
-                store = data["store"];
-                ratings = data["ratings"];
-                thumbsUp = data["thumbsUp"];
-                reviewAppVersion = data["reviewAppVersion"];
-                devResponseDate = data["devResponseDate"];
                 devResponse = data["devResponse"];
                 if (cluster == '10') {
                     out_text.text = 'Keywords: Slide to specific cluster to see the keywords.';
                     for (i = 0; i < x.length; i++) {
 						if(
                             reviews[i].includes(key) || 
-						    isEdited[i].includes(key) || 
-						    ratings[i].includes(key) || 
-						    reviewPostDate[i].includes(key) ||
-                            store[i].includes(key) ||
-                            thumbsUp[i].includes(key) ||
-                            reviewAppVersion[i].includes(key) || 
-                            devResponseDate[i].inlcudes(key) ||
-                            devResponse[i].includes(key)) {
+                            devResponse[i].includes(key)
+                            ) {
 							x[i] = x_backup[i];
 							y[i] = y_backup[i];
 						} else {
@@ -88,14 +76,8 @@ def input_callback(plot, source, out_text, topics):
                         if(labels[i] == cluster) {
 							if(
                                 reviews[i].includes(key) || 
-						        isEdited[i].includes(key) || 
-						        ratings[i].includes(key) || 
-						        reviewPostDate[i].includes(key) ||
-                                store[i].includes(key) ||
-                                thumbsUp[i].includes(key) ||
-                                reviewAppVersion[i].includes(key) || 
-                                devResponseDate[i].inlcudes(key) ||
-                                devResponse[i].includes(key)) {
+                                devResponse[i].includes(key)
+                                ) {
 								x[i] = x_backup[i];
 								y[i] = y_backup[i];
 							} else {
