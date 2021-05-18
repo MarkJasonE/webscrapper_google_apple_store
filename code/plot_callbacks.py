@@ -24,7 +24,7 @@ def selected_code():
             cb_data.source.selected.indices.forEach(index => devResponseDate.push(source.data["devResponseDate"][index]));
             cb_data.source.selected.indices.forEach(index => devResponse.push(source.data["devResponse"][index]));
 
-            review = "<h4><b>Review: </b>" + reviews[0].toString() + "</h4>";
+            review = "<h3><u>Review</u>: " + reviews[0].toString() + "</h3>";
             reviewPostDate = "<p><b>Review post date: </b>" + reviewPostDate[0].toString() + "</p>"
             rating = "<p><b>Rating: </b> " + ratings[0].toString() + "</p>"
             thumbsUp =  "<p><b>Number of upvote: </b>" + thumbsUps[0].toString() + "</p>"
